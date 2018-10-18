@@ -34,7 +34,6 @@ A `location` object:
     longitude: -77.026484
   }
 }
-
 ```
 
 `points` is an array of the `location` objects shown above.
