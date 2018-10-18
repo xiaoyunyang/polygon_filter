@@ -17,13 +17,16 @@ const intersect = (point, edgePoint1, edgePoint2) => {
     x: edgePoint2.latitude - point.latitude,
     y: edgePoint2.longitude - point.longitude
   };
-  const edgeLine = EdgeLine(point1, point2);
-  if (edgeLine.xIntercept >= 0 &&
-      edgeLine.xIntercept >= Math.min(point1.x, point2.x) &&
-      edgeLine.xIntercept <= Math.max(point1.x, point2.x)) {
-    return true;
+
+  // Edge case: if edgeLine is vertical...
+  if (point1.x === point2.x) {
+    return point.x === point1.x;
   }
-  return false;
+
+  const edgeLine = EdgeLine(point1, point2);
+  return (edgeLine.xIntercept >= 0 &&
+      edgeLine.xIntercept >= Math.min(point1.x, point2.x) &&
+      edgeLine.xIntercept <= Math.max(point1.x, point2.x));
 };
 
 const isPointInPoly = (point, poly) => {
