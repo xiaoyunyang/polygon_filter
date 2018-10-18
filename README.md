@@ -5,7 +5,7 @@
 ## Use Case:
 
 ```
-const { inside, outside } = polygonFilter({ locations, polygon });
+const { inside, outside } = pointsInPoly({ locations, polygon });
 ```
 
 ## Inputs
@@ -29,10 +29,9 @@ A `location` object:
 
 ```
 {
-  <locationId>: {
-    latitude: 38.899897,
-    longitude: -77.026484
-  }
+  id: <locationId>
+  latitude: 38.899897,
+  longitude: -77.026484
 }
 ```
 

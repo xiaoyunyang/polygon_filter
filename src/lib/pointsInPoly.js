@@ -1,9 +1,3 @@
-// Factory Function
-const Point = ({ id, latitude, longitude }) => {
-  if (!id) return { latitude, longitude };
-  return { id: { latitude, longitude } };
-};
-
 // Assume point1 and point2 do not form a vertical line so deltaX is never 0
 const EdgeLine = (point1, point2) => {
   const deltaY = point1.y - point2.y;
