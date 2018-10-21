@@ -7,6 +7,16 @@ const EdgeLine = (point1, point2) => {
   const xIntercept = -yIntercept / slope; // y=mx+b, let y=0 => x=-b/m
   return { slope, yIntercept, xIntercept };
 };
+
+const pointsEqual = (point1, point2) => {
+  return (point1.latitude === point2.latitude &&
+  point1.longitude === point2.longitude);
+};
+const qtyInRange = (qty, limit1, limit2) => {
+  return qty >= Math.min(limit1, limit2) &&
+    qty <= Math.max(limit1, limit2);
+};
+
 const vertexIntersect = (point1, point2) => {
   let horizIntersect = false;
   let vertIntersect = false;
@@ -87,14 +97,6 @@ const intersect = (point, edgePoint1, edgePoint2) => {
     vertexIntersectVert
   };
 };
-const pointsEqual = (point1, point2) => {
-  return (point1.latitude === point2.latitude &&
-  point1.longitude === point2.longitude);
-};
-const qtyInRange = (qty, limit1, limit2) => {
-  return qty >= Math.min(limit1, limit2) &&
-    qty <= Math.max(limit1, limit2);
-};
 const isPointInPoly = (point, poly) => {
   // baseline poly
   const polyVerticesNum = poly.length;
@@ -112,16 +114,6 @@ const isPointInPoly = (point, poly) => {
       pointsEqual(point, edgePoint2)) {
       return true;
     }
-
-    // if (edgePoint1.longitude === edgePoint2.longitude && point.longitude === edgePoint1.longitude) {
-    //   // Edge is vertical
-    //   return qtyInRange(point.latitude, edgePoint1.latitude, edgePoint2.latitude);
-    // }
-    // if (edgePoint1.latitude === edgePoint2.latitude && point.latitude === edgePoint1.latitude) {
-    //   // Edge is horizontal
-    //   return qtyInRange(point.longitude, edgePoint1.longitude, edgePoint2.longitude);
-    // }
-
     const {
       horizIntersect,
       vertIntersect
