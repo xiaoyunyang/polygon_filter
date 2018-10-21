@@ -25,17 +25,23 @@ describe('is point in poly1', () => {
     expect(isPointInPoly({ longitude: 7, latitude: 2 }, poly)).to.equal(false);
     expect(isPointInPoly({ longitude: 5, latitude: -2 }, poly)).to.equal(false);
   });
-  it('point in poly1 - inside', () => {
-    expect(isPointInPoly({ longitude: 4, latitude: 4 }, poly)).to.equal(true);
+  it('point in poly1', () => {
     expect(isPointInPoly({ longitude: 5, latitude: 3 }, poly)).to.equal(true);
     expect(isPointInPoly({ longitude: 4.5, latitude: 4.5 }, poly)).to.equal(true);
   });
   it('point in poly1 - on edge or vertex', () => {
     expect(isPointInPoly({ longitude: 3, latitude: 4 }, poly)).to.equal(true);
     expect(isPointInPoly({ longitude: 2, latitude: 3 }, poly)).to.equal(true);
-    expect(isPointInPoly({ longitude: 6, latitude: 4 }, poly)).to.equal(true);
     expect(isPointInPoly({ longitude: 8, latitude: 4 }, poly)).to.equal(true);
-    // expect(isPointInPoly({ longitude: 5, latitude: 5 }, poly)).to.equal(true);
+  });
+  it('point in poly1 - on horizontal edge', () => {
+    expect(isPointInPoly({ longitude: 6, latitude: 4 }, poly)).to.equal(true);
+  });
+  it('point in poly1 - left of horizontal edge', () => {
+    expect(isPointInPoly({ longitude: 4, latitude: 4 }, poly)).to.equal(true);
+  });
+  it('point in poly1 - on vertical edge', () => {
+    expect(isPointInPoly({ longitude: 5, latitude: 5 }, poly)).to.equal(true);
   });
 });
 
@@ -95,8 +101,6 @@ describe('is point in poly3', () => {
     expect(isPointInPoly({ longitude: 5, latitude: 4 }, poly)).to.equal(false);
     expect(isPointInPoly({ longitude: 3, latitude: -4 }, poly)).to.equal(false);
     expect(isPointInPoly({ longitude: 4, latitude: -5 }, poly)).to.equal(false);
-  });
-  it('point not in poly3 - edge cases not passing', () => {
     expect(isPointInPoly({ longitude: 4, latitude: 2 }, poly)).to.equal(false);
   });
   it('point in poly3 - inside', () => {
@@ -105,8 +109,75 @@ describe('is point in poly3', () => {
     expect(isPointInPoly({ longitude: 3, latitude: 2 }, poly)).to.equal(true);
     expect(isPointInPoly({ longitude: 3, latitude: 1 }, poly)).to.equal(true);
   });
-  it('point in poly3 - on edge or vertex', () => {
+  it('point in poly3 - on vertex', () => {
     expect(isPointInPoly({ longitude: 4, latitude: 1 }, poly)).to.equal(true);
-    // expect(isPointInPoly({ longitude: 7, latitude: 4 }, poly)).to.equal(true);
+    expect(isPointInPoly({ longitude: 7, latitude: 6 }, poly)).to.equal(true);
+  });
+  it('point in poly3 - on vertical edge', () => {
+    expect(isPointInPoly({ longitude: 7, latitude: 4 }, poly)).to.equal(true);
+  });
+});
+
+const poly4 = [
+  { longitude: 0, latitude: 2 },
+  { longitude: 0, latitude: 5 },
+  { longitude: 6, latitude: 4 },
+  { longitude: 4, latitude: 2 },
+  { longitude: 2, latitude: 3 }
+];
+
+describe('is point in poly4', () => {
+  const poly = poly4;
+  it('point not in poly4', () => {
+    expect(isPointInPoly({ longitude: 2, latitude: 2 }, poly)).to.equal(false);
+  });
+  it('point in poly4 - inside', () => {
+    expect(isPointInPoly({ longitude: 2, latitude: 4 }, poly)).to.equal(true);
+    expect(isPointInPoly({ longitude: 1, latitude: 3 }, poly)).to.equal(true);
+  });
+  it('point in poly4 - on vertical edge', () => {
+    expect(isPointInPoly({ longitude: 0, latitude: 4 }, poly)).to.equal(true);
+    expect(isPointInPoly({ longitude: 0, latitude: 3 }, poly)).to.equal(true);
+  });
+  it('point in poly4 - on vertex', () => {
+    expect(isPointInPoly({ longitude: 0, latitude: 2 }, poly)).to.equal(true);
+    expect(isPointInPoly({ longitude: 0, latitude: 5 }, poly)).to.equal(true);
+  });
+});
+
+const poly5 = [
+  { longitude: 0, latitude: 2 },
+  { longitude: 1, latitude: 5 },
+  { longitude: 4, latitude: 5 },
+  { longitude: 7, latitude: 3 },
+  { longitude: 2, latitude: 3 }
+];
+
+describe('is point in poly5', () => {
+  const poly = poly5;
+  it('point not in poly5 - left of horizontal edge', () => {
+    expect(isPointInPoly({ longitude: 0, latitude: 5 }, poly)).to.equal(false);
+  });
+  it('point in poly5 - left of horizontal edge', () => {
+    expect(isPointInPoly({ longitude: 1, latitude: 3 }, poly)).to.equal(true);
+  });
+  it('point in poly5 - on horizontal edge', () => {
+    expect(isPointInPoly({ longitude: 2, latitude: 5 }, poly)).to.equal(true);
+    expect(isPointInPoly({ longitude: 1, latitude: 5 }, poly)).to.equal(true);
+    expect(isPointInPoly({ longitude: 4, latitude: 5 }, poly)).to.equal(true);
+  });
+});
+
+const poly6 = [
+  { longitude: 0, latitude: 2 },
+  { longitude: 1, latitude: 5 },
+  { longitude: 1, latitude: 7 },
+  { longitude: 7, latitude: 3 },
+  { longitude: 2, latitude: 3 }
+];
+describe('is point in poly6', () => {
+  const poly = poly6;
+  it('point in poly6 - left of horizontal edge and below vertical edge', () => {
+    expect(isPointInPoly({ longitude: 1, latitude: 3 }, poly)).to.equal(true);
   });
 });

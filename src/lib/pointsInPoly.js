@@ -16,7 +16,20 @@ const qtyInRange = (qty, limit1, limit2) => {
   return qty >= Math.min(limit1, limit2) &&
     qty <= Math.max(limit1, limit2);
 };
-
+const edgeIsVert = (edgePoint1, edgePoint2) => {
+  return edgePoint1.longitude === edgePoint2.longitude;
+};
+const edgeIsHoriz = (edgePoint1, edgePoint2) => {
+  return edgePoint1.latitude === edgePoint2.latitude;
+};
+const pointOnVertLine = (point, edgePoint1, edgePoint2) => {
+  return point.longitude === edgePoint1.longitude &&
+    qtyInRange(point.latitude, edgePoint1.latitude, edgePoint2.latitude);
+};
+const pointOnHorizLine = (point, edgePoint1, edgePoint2) => {
+  return point.latitude === edgePoint1.latitude &&
+    qtyInRange(point.longitude, edgePoint1.longitude, edgePoint2.longitude);
+};
 const vertexIntersect = (point1, point2) => {
   let horizIntersect = false;
   let vertIntersect = false;
@@ -45,10 +58,10 @@ const intersect = (point, edgePoint1, edgePoint2) => {
   if (point1.x === point2.x) {
     // check using horizontal ray approaching positive x- inf
     let horizIntersect = Math.min(point1.y, point2.y) < 0 &&
-      Math.max(point1.y, point2.y) >= 0 &&
-      point1.x > 0;
+      Math.max(point1.y, point2.y) > 0 &&
+      point1.x >= 0;
 
-    const vertexIntersectHoriz = vertexIntersect(point1, point2).horizIntersect;  
+    const vertexIntersectHoriz = vertexIntersect(point1, point2).horizIntersect;
     horizIntersect = horizIntersect || vertexIntersectHoriz;
 
     return {
@@ -114,6 +127,18 @@ const isPointInPoly = (point, poly) => {
       pointsEqual(point, edgePoint2)) {
       return true;
     }
+
+    // Edge case: if point is on vertical edge
+    if (edgeIsVert(edgePoint1, edgePoint2) &&
+      pointOnVertLine(point, edgePoint1, edgePoint2)) {
+      return true;
+    }
+    // Edge case: if point is on horizontal edge
+    if (edgeIsHoriz(edgePoint1, edgePoint2) &&
+      pointOnHorizLine(point, edgePoint1, edgePoint2)) {
+      return true;
+    }
+
     const {
       horizIntersect,
       vertIntersect
