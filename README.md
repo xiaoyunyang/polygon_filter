@@ -2,6 +2,13 @@
 
 > A simple library which filters an array of geo locations based on their existence inside a given polygon.
 
+Spec
+
+- An Algorithm for determining whether points exist in Polygon
+- REST / GraphQL API. Node server.
+- Points and vertices of the polygon are in [GeoJSON](http://geojson.org/)
+- Works with any arbitrary Poly
+
 ## Use Case:
 
 ```
