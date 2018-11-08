@@ -54,3 +54,7 @@ An array of `point` objects.
 
 - `inside` - locationIds of points that are inside the polygon, including the points which overlaps with one of the edges of the polygon.
 - `outside` - locationIds of points that are outside the polygon.
+
+## Testing
+
+[docs](/docs/testing.md) on test cases.
